@@ -16,8 +16,8 @@ export default function Header({ userName = "Player" }) {
 
     const navPages = [
         {
-            name: "Home",
-            href: "/inicio",
+            name: "Inicio",
+            href: "/landing",
             icon: <IoHomeOutline />
         }
     ];
@@ -25,7 +25,7 @@ export default function Header({ userName = "Player" }) {
     return (
         <main
             className={`flex items-center justify-between w-full h-auto py-2 sm:py-3 px-3 sm:px-6 md:px-8
-                bg-white bg-opacity-50 ${roboto_condensed.className}
+                bg-white rounded-3xl bg-opacity-50 ${roboto_condensed.className}
                 shadow-lg shadow-gray-500/50 text-black`}
         >
             {/* Logo y título */}
@@ -38,7 +38,7 @@ export default function Header({ userName = "Player" }) {
                     />
                 </div>
 
-                <h1 className={`text-2xl sm:text-3xl md:text-5xl whitespace-nowrap text-black text-left ${jersey_10.className}`}>
+                <h1 className={`text-2xl sm:text-3xl md:text-5xl whitespace-nowrap  text-black text-left ${jersey_10.className}`}>
                     AeroVec
                 </h1>
             </div>
