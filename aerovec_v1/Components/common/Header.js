@@ -26,7 +26,7 @@ export default function Header({ userName = "Player" }) {
         <main
             className={`flex items-center justify-between w-full h-auto py-2 sm:py-3 px-3 sm:px-6 md:px-8
                 bg-white rounded-3xl bg-opacity-50 ${roboto_condensed.className}
-                shadow-lg shadow-gray-500/50 text-black`}
+                shadow-lg shadow-gray-500/50 text-black mb-16`}
         >
             {/* Logo y título */}
             <div className="flex items-center justify-start w-auto gap-2 sm:gap-4">
