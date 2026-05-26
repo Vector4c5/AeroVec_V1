@@ -21,20 +21,25 @@ const STORAGE_KEY = 'aerovec_documents_temp';
 
 export default function Landing() {
   const [documents, setDocuments] = useState([]);
+
+  // Cargar documentos desde sessionStorage solo en el cliente después de la hidratación
+  useEffect(() => {
+    try {
+      const saved = sessionStorage.getItem(STORAGE_KEY);
+      if (!saved) return;
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const id = setTimeout(() => setDocuments(parsed), 0);
+        return () => clearTimeout(id);
+      }
+    } catch (err) {
+      console.error('Error al leer documentos desde sessionStorage:', err);
+    }
+  }, []);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingIndex, setEditingIndex] = useState(null);
 
-  // Cargar documentos desde sessionStorage al montar el componente
-  useEffect(() => {
-    const savedDocuments = sessionStorage.getItem(STORAGE_KEY);
-    if (savedDocuments) {
-      try {
-        setDocuments(JSON.parse(savedDocuments));
-      } catch (error) {
-        console.error('Error al cargar documentos:', error);
-      }
-    }
-  }, []);
+  // (Carga inicial movida al initializer de useState)
 
   // Guardar documentos en sessionStorage cada vez que cambien
   useEffect(() => {

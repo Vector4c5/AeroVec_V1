@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 const getInitialFormData = () => ({
   nombre: '',
@@ -11,37 +11,31 @@ export default function DocumentModal({ isOpen, onClose, onSubmit, editingDoc = 
   const [formData, setFormData] = useState(getInitialFormData());
 
   useEffect(() => {
-    if (isOpen) {
-      if (editingDoc) {
-        setFormData(editingDoc);
-      } else {
-        setFormData(getInitialFormData());
-      }
-    }
-  }, [isOpen, editingDoc?.nombre]);
+    if (!isOpen) return;
 
-  const handleChange = (e) => {
+    const target = editingDoc ?? getInitialFormData();
+
+    // Schedule setFormData asynchronously to avoid synchronous setState within effect
+    const id = setTimeout(() => setFormData(target), 0);
+    return () => clearTimeout(id);
+  }, [isOpen, editingDoc]);
+
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-  };
+  }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
     if (formData.nombre.trim() === '') {
       alert('Por favor completa al menos el nombre del documento');
       return;
     }
     onSubmit(formData);
-    setFormData({
-      nombre: '',
-      descripcion: '',
-      tipo: 'seguimiento',
-      fecha: new Date().toISOString().split('T')[0],
-    });
-  };
+  }, [formData, onSubmit]);
 
   if (!isOpen) return null;
 
