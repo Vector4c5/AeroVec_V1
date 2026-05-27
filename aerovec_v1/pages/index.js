@@ -69,7 +69,7 @@ export default function Home() {
         >
           <div className=" w-6/12 h-auto flex flex-col items-center justify-center border-b-2 border-white">
             <p className={`${jersey_10.className} text-center text-white text-8xl `}>
-              Bievenido a AeroVec
+              UwU
             </p>
 
           </div>
